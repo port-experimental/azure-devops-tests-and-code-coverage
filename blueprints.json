@@ -1,0 +1,227 @@
+{
+  "blueprints": [
+    {
+      "identifier": "azure_dev_ops_build",
+      "title": "Azure DevOps Build",
+      "icon": "AzureDevops",
+      "schema": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "build_id": {
+            "type": "number",
+            "title": "Build Id"
+          },
+          "build_number": {
+            "icon": "DefaultProperty",
+            "type": "string",
+            "title": "Build Number"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "owning_repository": {
+            "type": "string",
+            "title": "Owning Repository"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {
+        "repository": {
+          "title": "Repository",
+          "target": "azureDevopsRepository",
+          "required": false,
+          "many": false
+        }
+      }
+    },
+    {
+      "identifier": "azureTestRun",
+      "title": "Azure Test Run",
+      "icon": "AzureDevops",
+      "schema": {
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "NotStarted",
+              "InProgress",
+              "Completed",
+              "Aborted",
+              "NeedsInvestigation",
+              "Stopped"
+            ]
+          },
+          "totalTests": {
+            "type": "number"
+          },
+          "passedTests": {
+            "type": "number"
+          },
+          "failedTests": {
+            "type": "number"
+          },
+          "skippedTests": {
+            "type": "number"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completeTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationSec": {
+            "type": "number"
+          },
+          "branchName": {
+            "type": "string"
+          },
+          "commitId": {
+            "type": "string"
+          },
+          "automated": {
+            "type": "boolean"
+          },
+          "subType": {
+            "type": "string"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {
+        "build": {
+          "title": "Build",
+          "target": "azure_dev_ops_build",
+          "required": false,
+          "many": false
+        },
+        "pipeline": {
+          "title": "Pipeline",
+          "target": "azureDevopsPipeline",
+          "required": false,
+          "many": false
+        },
+        "repository": {
+          "title": "Repository",
+          "target": "azureDevopsRepository",
+          "required": false,
+          "many": false
+        }
+      }
+    },
+    {
+      "identifier": "azureTestResult",
+      "title": "Azure Test Result",
+      "icon": "AzureDevops",
+      "schema": {
+        "properties": {
+          "testCaseTitle": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "Passed",
+              "Failed",
+              "NotExecuted",
+              "Blocked",
+              "Warning",
+              "Aborted"
+            ]
+          },
+          "durationMs": {
+            "type": "number"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "number"
+          },
+          "automatedTestName": {
+            "type": "string"
+          },
+          "automatedTestType": {
+            "type": "string"
+          },
+          "errorMessage": {
+            "type": "string"
+          },
+          "stackTrace": {
+            "type": "string"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {
+        "run": {
+          "title": "Test Run",
+          "target": "azureTestRun",
+          "required": true,
+          "many": false
+        }
+      }
+    },
+    {
+      "identifier": "azureCodeCoverage",
+      "title": "Azure Code Coverage",
+      "icon": "AzureDevops",
+      "schema": {
+        "properties": {
+          "moduleName": {
+            "type": "string"
+          },
+          "covered": {
+            "type": "number"
+          },
+          "total": {
+            "type": "number"
+          },
+          "percentage": {
+            "type": "number"
+          },
+          "reportUrl": {
+            "type": "string"
+          },
+          "coverage_type": {
+            "type": "string",
+            "title": "Coverage Type"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {
+        "repository": {
+          "title": "Repository",
+          "target": "azureDevopsRepository",
+          "required": false,
+          "many": false
+        },
+        "build": {
+          "title": "Build",
+          "target": "azure_dev_ops_build",
+          "required": false,
+          "many": false
+        }
+      }
+    }
+  ]
+}
