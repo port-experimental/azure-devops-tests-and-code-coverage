@@ -245,10 +245,7 @@ def main():
             # Add repository relation using Port repository identifiers (format: project/repo-name)
             if b.get("repository", {}).get("name"):
                 repo_name = b["repository"]["name"]
-                # Use the actual project name from Azure DevOps (lowercased to match Port format)
-                project_name_lower = project_name.lower()
-                # Construct Port repository identifier dynamically: {project}/{repo-name}
-                port_repo_id = f"{project_name_lower}/{repo_name}"
+                port_repo_id = f"{project_name}/{repo_name}".lower()
                 build_relations["repository"] = port_repo_id
                 print(f"  🔗 Linking build to repository: {port_repo_id}")
             
